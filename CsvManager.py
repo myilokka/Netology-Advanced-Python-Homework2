@@ -9,7 +9,7 @@ class CsvManager:
 
     def csv_opener(self):
         with open(self.file, encoding='utf-8') as file:
-            reader = csv.reader(self.file, delimiter=',')
+            reader = csv.reader(file, delimiter=',')
             data = list(reader)
         return data
 
@@ -91,4 +91,4 @@ class CsvManager:
         print('Книга контактов в порядке!')
 
     def fix_contact_book(self):
-        self.csv_writer(self.regulate_phone_numbers(self.delete_doubles(self.regulate_name(self.csv_opener(self.file)))))
+        self.csv_writer(self.regulate_phone_numbers(self.delete_doubles(self.regulate_name(self.csv_opener()))))
