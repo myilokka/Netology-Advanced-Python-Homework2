@@ -1,18 +1,21 @@
 import csv
 from pprint import pprint
 import re
+from Decorator.Decorator import path, path_logger
 
 
 class CsvManager:
     def __init__(self, file):
         self.file = file
 
+    @path_logger(path)
     def csv_opener(self):
         with open(self.file, encoding='utf-8') as file:
             reader = csv.reader(file, delimiter=',')
             data = list(reader)
         return data
 
+    @path_logger(path)
     def regulate_name(self, data):
         result = data
         for k, i in enumerate(data):
@@ -36,6 +39,7 @@ class CsvManager:
 
         return result
 
+    @path_logger(path)
     def delete_doubles(self, data):
         result = data
         tmp_list = []
@@ -69,6 +73,7 @@ class CsvManager:
 
         return result
 
+    @path_logger(path)
     def regulate_phone_numbers(self, data):
         text = ''
         for i in range(len(data)):
@@ -84,11 +89,13 @@ class CsvManager:
         result = [text[i:i+7] for i in range(0, len(text), 7)]
         return result
 
+    @path_logger(path)
     def csv_writer(self, result):
         with open("phonebook.csv", "w") as f:
             datawriter = csv.writer(f, delimiter=',')
             datawriter.writerows(result)
         print('Книга контактов в порядке!')
 
+    @path_logger(path)
     def fix_contact_book(self):
         self.csv_writer(self.regulate_phone_numbers(self.delete_doubles(self.regulate_name(self.csv_opener()))))
